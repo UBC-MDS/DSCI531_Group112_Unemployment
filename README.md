@@ -11,7 +11,7 @@ The app contains three charts (depending on the research questions, lollipop cha
 ### App sketch
 The following sketch shows the visual design of the app.
 
-![Image]("https://github.com/Marvin-chengmin/DSCI532_Group112_Unemployment/blob/master/img/sketch.png")
+![alt text]("https://github.com/Marvin-chengmin/DSCI532_Group112_Unemployment/blob/master/img/sketch.png")
 
 
 ### Our team's GitHub.com repo
