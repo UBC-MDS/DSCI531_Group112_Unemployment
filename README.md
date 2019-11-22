@@ -11,7 +11,7 @@ The app contains three charts (depending on the research questions, lollipop cha
 ### App sketch
 The following sketch shows the visual design of the app.
 
-![Image](https://github.com/Marvin-chengmin/DSCI532_Group112_Unemployment/blob/master/img/sketch.png)
+![Image](https://github.com/UBC-MDS/DSCI532_Group112_Unemployment/blob/master/img/sketch.png)
 
 
 ### Our team's GitHub.com repo
@@ -20,7 +20,4 @@ https://github.com/UBC-MDS/DSCI532_Group112_Unemployment
 
 ### Click [here](https://github.com/UBC-MDS/DSCI532_Group112_Unemployment/blob/master/CODE_OF_CONDUCT.md) for our Code of Conduct 
 
-### Click [here]() to view our proposal
-
-### Click [here]() for our team work contract
-A link to your team work contract (which should be on GitHub.ubc.ca)
+### Click [here](https://github.com/UBC-MDS/DSCI532_Group112_Unemployment/blob/master/PROPOSAL.md) to view our proposal
