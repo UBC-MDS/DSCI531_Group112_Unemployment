@@ -10,7 +10,7 @@ The app contains three charts (depending on the research questions, lollipop cha
 
 ### App sketch
 The following sketch shows the visual design of the app.
-![Image]("data\sketch.png")
+![Image]("data/sketch.png")
 
 
 ### Our team's GitHub.com repo
