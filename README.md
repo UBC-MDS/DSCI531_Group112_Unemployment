@@ -19,6 +19,3 @@ The following sketch shows the visual design of the app.
 ### Click [here](https://github.com/UBC-MDS/DSCI532_Group112_Unemployment/blob/master/CODE_OF_CONDUCT.md) for our Code of Conduct 
 
 ### Click [here](https://github.com/UBC-MDS/DSCI532_Group112_Unemployment/blob/master/PROPOSAL.md) to view our proposal
-
-### Click [here]() for our team work contract
-A link to your team work contract (which should be on GitHub.ubc.ca)
