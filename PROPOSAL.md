@@ -2,9 +2,8 @@
 
 ## Section 1: Motivation and Purpose
   
-  Unemployment rates, defined as the number of cilivian labor force divded by the number of unemployed but are actively seeking work (Amadeo, 2019), can inform us on multiple factors for a country or an industry. It can inform us on the rise and fall of a country’s economic condition and the rate can act as a lagging indicator to help explain certain economic slowdowns (Blank, 2008). It can also help inform us on the trend and job market of an industry and whether people are having difficulty finding a job in a specific field. The purpose of our app is to show which industries have been decreasing or increasing in the number of jobs available. We would expect the industries that are implementing more automation to have higher rates of unemployment. Understanding unemployment trends could help us address economic challenges and determine which industries are facing job losses or gains. We hope that our dashboard could be used as a framework for other analysts to interpret and understand unemployment rates in respective industries and countries. 
+Unemployment rates, defined as the number of cilivian labor force divded by the number of unemployed but are actively seeking work (Amadeo, 2019), can inform us on multiple factors for a country or an industry. It can inform us on the rise and fall of a country’s economic condition and the rate can act as a lagging indicator to help explain certain economic slowdowns (Blank, 2008). It can also help inform us on the trend and job market of an industry and whether people are having difficulty finding a job in a specific field. The purpose of our app is to show which industries have been decreasing or increasing in the number of jobs available. We would expect the industries that are implementing more automation to have higher rates of unemployment. Understanding unemployment trends could help us address economic challenges and determine which industries are facing job losses or gains. We hope that our dashboard could be used as a framework for other analysts to interpret and understand unemployment rates in respective industries and countries. 
 	
-
 ## Section 2: Description of the data
 
 We will be visualizing the Unemployment Across Industries dataset gathered from the [vega datasets](https://github.com/vega/vega-datasets) with 6 variables and 1708 observations. The `series` column gives us the 14 industry types in the dataset. The industries in the dataset are:
@@ -27,6 +26,7 @@ We will be visualizing the Unemployment Across Industries dataset gathered from 
 ## Section 3: Research questions and usage scenarios
 
 Our dashboard works to answer questions on industries unemployment trends with visualizations. Our dashboard could serve as a framework for officials to gain insight into their countries industry employment trends and implement changes pertaining to the results. For instance, the officials can change policies such as cutting taxes for certain industries that have higher unemployment rates. Our research questions are as follows: 
+
 
 1) Which industry has grown/shrunk the most?
 
