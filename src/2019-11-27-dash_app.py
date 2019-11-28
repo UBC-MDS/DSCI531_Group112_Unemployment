@@ -2,7 +2,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
-#external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 import altair as alt
 import vega_datasets
 import pandas as pd
@@ -99,15 +99,11 @@ def make_plot(start_year = 2000, end_year = 2001, stat = 'rate'): #Add in a defa
 
     return chart
 
-jumbotron = dbc.Jumbotron(
+header = dbc.Jumbotron(
     [
         dbc.Container(
-            [
-                #html.Img(src='https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Unico_Anello.png/1920px-Unico_Anello.png', 
-                #      width='100px'),
-                html.H1("Unemployment Rates in Industries", className="display-3"),
-                html.P(
-                    "These graphs display a framework for countries to examine their unemployment rates across industries",
+            [html.H1("Unemployment Rates in Industries", className="display-3"),
+                html.P("These graphs display a framework for countries to examine their unemployment rates across industries",
                     className="lead",
                 ),
             ],
@@ -156,8 +152,7 @@ content = dbc.Container([
                                 )
                         ), ),
 
-                        html.H3('End Year'),
-
+                    html.H3('End Year'),
                     dbc.Col(
                         dcc.Dropdown(
                         id='dd-end_year',
@@ -179,8 +174,7 @@ content = dbc.Container([
                             )
                         ), ),
 
-                        html.H3('Value'),
-
+                    html.H3('Value'),
                     dbc.Col(
                         dcc.Dropdown(
                         id='dd-value',
@@ -197,23 +191,46 @@ content = dbc.Container([
                     )
                 ]
     )
-])       
+])   
+
 
 #LAYOUT
 app.layout = html.Div([ 
-        ### Add Tabs to the top of the page
-    dcc.Tabs(id='tabs', value='tab1', children=[
+    ### Add Tabs to the top of the page
+    dcc.Tabs(id='tabs-example', value='tab-1', children=[
         dcc.Tab(label='Job Growth Across Industries', value='tab-1'),
         dcc.Tab(label='Unemployment Over years', value='tab-2'),
         dcc.Tab(label='Seasonal Unemployment', value='tab-3'), 
-    ]), 
-
-    html.Div([jumbotron,
-            content
-            ]
-            )
+    ]),
+    html.Div([header]),
+    html.Div(id='tabs-content')
+            
 ]
 )   
+
+@app.callback(Output('tabs-content', 'children'),
+              [Input('tabs-example', 'value')])
+              
+def render_content(tab):
+    if tab == 'tab-1':
+        return content
+    elif tab == 'tab-2':
+        return html.Div([
+            html.H3('Tab content 2'),
+            dcc.Graph(
+                id='graph-2-tabs',
+                figure={
+                    'data': [{
+                        'x': [1, 2, 3],
+                        'y': [5, 10, 6],
+                        'type': 'bar'
+                    }]
+                }
+            )
+        ])
+    elif tab == 'tab-3':
+        pass
+
 
     
 @app.callback(
