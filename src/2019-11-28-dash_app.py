@@ -92,14 +92,14 @@ def make_plot(year_range=[2000,2001], stat = 'rate'): #Add in a default value to
                     alt.Y("series:O", title = ''),
                     color = alt.condition(alt.datum.val > 0, alt.value("forestgreen"), alt.value("red")),
                     tooltip = ["val"]
-                    ).interactive()
+                    )
         cp = alt.Chart(new_df).mark_point(size = 70, filled = True, opacity = 1).encode(
                     alt.X("val:Q", title = "Percentage Change",
                           axis = alt.Axis(tickCount=10, format = '%')),
                     alt.Y("series:O", title = ''),
                     color = alt.condition(alt.datum.val > 0, alt.value("forestgreen"), alt.value("red")),
                     tooltip = ["val"]
-                    ).interactive()
+                    )
         
     if stat == "count":
         new_df["val"] = round(df[year_range[1]] - df[year_range[0]])
@@ -108,13 +108,13 @@ def make_plot(year_range=[2000,2001], stat = 'rate'): #Add in a default value to
                     alt.Y("series:O", title = ''),
                     color = alt.condition(alt.datum.val > 0, alt.value("forestgreen"), alt.value("red")),
                     tooltip = ["val"]
-                    ).interactive()
+                    )
         cp = alt.Chart(new_df).mark_point(size = 70, filled = True, opacity = 1).encode(
                     alt.X("val:Q", title = "Absolute Change"),
                     alt.Y("series:O", title = ''),
                     color = alt.condition(alt.datum.val > 0, alt.value("forestgreen"), alt.value("red")),
                     tooltip = ["val"]
-                    ).interactive()
+                    )
 
     return cb + cp
 
