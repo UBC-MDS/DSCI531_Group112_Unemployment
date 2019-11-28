@@ -85,19 +85,38 @@ def make_plot(start_year = 2000, end_year = 2001, stat = 'rate'): #Add in a defa
 
     new_df = pd.DataFrame(df["series"])
     if stat == "rate":
-        new_df["growth_{0}_{1}".format(start_year, end_year)] = (df[end_year] - df[start_year]) / df[start_year]
-    if stat == "count":
-        new_df["difference_{0}_{1}".format(start_year, end_year)] = df[end_year] - df[start_year]
+        new_df["val"] = round((df[end_year] - df[start_year]) / df[start_year], 2)
+        cb = alt.Chart(new_df).mark_bar(size = 2).encode(
+                    alt.X("val:Q", title = "Percentage Change", 
+                          axis = alt.Axis(tickCount=10, format = '%')),
+                    alt.Y("series:O", title = ''),
+                    color = alt.condition(alt.datum.val > 0, alt.value("forestgreen"), alt.value("red")),
+                    tooltip = ["val"]
+                    ).interactive()
+        cp = alt.Chart(new_df).mark_point(size = 70, filled = True, opacity = 1).encode(
+                    alt.X("val:Q", title = "Percentage Change",
+                          axis = alt.Axis(tickCount=10, format = '%')),
+                    alt.Y("series:O", title = ''),
+                    color = alt.condition(alt.datum.val > 0, alt.value("forestgreen"), alt.value("red")),
+                    tooltip = ["val"]
+                    ).interactive()
         
-    #PLOT 1 JOB GROWTH ACROSS INDUSTRIES
-    chart = alt.Chart(new_df).mark_bar(size=4).encode(
-                alt.X(new_df.columns[1], type = 'quantitative', title = stat),
-                alt.Y("series:O", title=""),
-                tooltip = [new_df.columns[1]]
-            ).properties(title='Job Growth Across Industries',
-                        width=600, height=400).interactive()
+    if stat == "count":
+        new_df["val"] = round(df[end_year] - df[start_year])
+        cb = alt.Chart(new_df).mark_bar(size = 2).encode(
+                    alt.X("val:Q", title = "Absolute Change"),
+                    alt.Y("series:O", title = ''),
+                    color = alt.condition(alt.datum.val > 0, alt.value("forestgreen"), alt.value("red")),
+                    tooltip = ["val"]
+                    ).interactive()
+        cp = alt.Chart(new_df).mark_point(size = 70, filled = True, opacity = 1).encode(
+                    alt.X("val:Q", title = "Absolute Change"),
+                    alt.Y("series:O", title = ''),
+                    color = alt.condition(alt.datum.val > 0, alt.value("forestgreen"), alt.value("red")),
+                    tooltip = ["val"]
+                    ).interactive()
 
-    return chart
+    return cb + cp
 
 jumbotron = dbc.Jumbotron(
     [
