@@ -14,7 +14,7 @@ app.config['suppress_callback_exceptions'] = True
 server = app.server
 app.title = 'Group112 Dash app: Unemployment'
 
-def make_plot(start_year = 2000, end_year = 2001, stat = 'rate'): #Add in a default value to start with
+def make_plot(year_range=[2000,2001], stat = 'rate'): #Add in a default value to start with
 
 
     #THEME
@@ -85,7 +85,7 @@ def make_plot(start_year = 2000, end_year = 2001, stat = 'rate'): #Add in a defa
 
     new_df = pd.DataFrame(df["series"])
     if stat == "rate":
-        new_df["val"] = round((df[end_year] - df[start_year]) / df[start_year], 2)
+        new_df["val"] = round((df[year_range[1]] - df[year_range[0]]) / df[year_range[0]], 2)
         cb = alt.Chart(new_df).mark_bar(size = 2).encode(
                     alt.X("val:Q", title = "Percentage Change", 
                           axis = alt.Axis(tickCount=10, format = '%')),
@@ -102,7 +102,7 @@ def make_plot(start_year = 2000, end_year = 2001, stat = 'rate'): #Add in a defa
                     ).interactive()
         
     if stat == "count":
-        new_df["val"] = round(df[end_year] - df[start_year])
+        new_df["val"] = round(df[year_range[1]] - df[year_range[0]])
         cb = alt.Chart(new_df).mark_bar(size = 2).encode(
                     alt.X("val:Q", title = "Absolute Change"),
                     alt.Y("series:O", title = ''),
@@ -118,99 +118,140 @@ def make_plot(start_year = 2000, end_year = 2001, stat = 'rate'): #Add in a defa
 
     return cb + cp
 
-header = dbc.Jumbotron(
-    [
-        dbc.Container(
-            [html.H1("Unemployment Rates in Industries", className="display-3"),
-                html.P("These graphs display a framework for countries to examine their unemployment rates across industries",
-                    className="lead",
-                ),
-            ],
-            fluid=True,
-        )
-    ],
-    fluid=True,
-)
+# header = dbc.Jumbotron(
+#     [
+#         dbc.Container(
+#             [html.H1("Unemployment Rates in Industries", className="display-3"),
+#                 html.P("These graphs display a framework for countries to examine their unemployment rates across industries",
+#                     className="lead",
+#                 ),
+#             ],
+#             fluid=True,
+#         )
+#     ],
+#     fluid=True,
+# )
 
 content = dbc.Container([
-    dbc.Row(
-                [dbc.Col(
-                    html.Iframe(
-                        sandbox='allow-scripts',
-                        id='plot',
-                        height='500',
-                        width='1000',
-                        style={'border-width': '0'},
-                        ################ The magic happens here
-                        srcDoc=make_plot().to_html()
-                        ################ The magic happens here
-                        )),
+             dbc.Row(
+                html.Iframe(
+                    sandbox='allow-scripts',
+                    id='plot',
+                    height='400',
+                    width='1000',
+                    style={'border-width': '0'},
+                    ################ The magic happens here
+                    srcDoc=make_plot().to_html()
+                    ################ The magic happens here
+                    )),
 
-                             # Just to add some space
-                    html.Iframe(height='100', width='10',style={'border-width': '0'}),
+                    # Just to add some space
+                   # html.Iframe(height='100', width='10',style={'border-width': '0'}),
                     
-                    html.H3('Start Year'),
+                    html.H3('Choose Statistic:'),
                     dbc.Col(
-                        dcc.Dropdown(
-                        id='dd-start_year',
-                        options=[
-                            {'label': 2000, 'value': 2000},
-                            {'label': 2001, 'value': 2001},
-                            {'label': 2002, 'value': 2002},
-                            {'label': 2003, 'value': 2003},
-                            {'label': 2004, 'value': 2004},
-                            {'label': 2005, 'value': 2005},
-                            {'label': 2006, 'value': 2006},
-                            {'label': 2007, 'value': 2007},
-                            {'label': 2008, 'value': 2008},
-                            {'label': 2009, 'value': 2009}
-                        ],
-                        value=2000,
-                        style=dict(width='70%',
-                                verticalAlign="middle"
-                                )
-                        ), ),
+                    html.Div(
+                        dcc.RadioItems(
+                            id='dd-value',
+                            options=[
+                                {'label': 'Rate', 'value': 'rate'},
+                                {'label': 'Count', 'value': 'count'}
+                            ],
+                            value='rate',
+                            style=dict(width='40%',
+                                    verticalAlign="middle")
+                            ),
+                    ),),
 
-                    html.H3('End Year'),
-                    dbc.Col(
-                        dcc.Dropdown(
-                        id='dd-end_year',
-                        options=[
-                            {'label': 2001, 'value': 2001},
-                            {'label': 2002, 'value': 2002},
-                            {'label': 2003, 'value': 2003},
-                            {'label': 2004, 'value': 2004},
-                            {'label': 2005, 'value': 2005},
-                            {'label': 2006, 'value': 2006},
-                            {'label': 2007, 'value': 2007},
-                            {'label': 2008, 'value': 2008},
-                            {'label': 2009, 'value': 2009},
-                            {'label': 2010, 'value': 2010}
-                        ],
-                        value=2001,
-                        style=dict(width='70%',
-                            verticalAlign="middle"
+                    html.H3('Choose Year Range:'),
+                    html.Div([
+                        dcc.RangeSlider(
+                            id='year_range',
+                            count=1,
+                            min=2000,
+                            max=2010,
+                            step=1,
+                            value=[2000, 2001],
+                            marks={
+                                2000: '2000',
+                                2001: '2001',
+                                2002: '2002',
+                                2003: '2003',
+                                2004: '2004',
+                                2005: '2005',
+                                2006: '2006',
+                                2007: '2007',
+                                2008: '2008',
+                                2009: '2009',
+                                2010: '2010'
+                                }
                             )
-                        ), ),
+                    ],
+                    style={"display": "grid", "grid-template-columns": "80%",
+                            "text-align":"center"}),
 
-                    html.H3('Value'),
-                    dbc.Col(
-                        dcc.Dropdown(
-                        id='dd-value',
-                        options=[
-                            {'label': 'Rate', 'value': 'rate'},
-                            {'label': 'Count', 'value': 'count'}
-                        ],
-                        value='rate',
-                        style=dict(width='70%',
-                            verticalAlign="middle")
-                        ),
-                        # Just to add some space
-                     html.Iframe(height='200', width='10',style={'border-width': '0'})
-                    )
+                    # html.H3('Start Year'),
+                    # dbc.Col(
+                    #     dcc.Dropdown(
+                    #     id='dd-start_year',
+                    #     options=[
+                    #         {'label': 2000, 'value': 2000},
+                    #         {'label': 2001, 'value': 2001},
+                    #         {'label': 2002, 'value': 2002},
+                    #         {'label': 2003, 'value': 2003},
+                    #         {'label': 2004, 'value': 2004},
+                    #         {'label': 2005, 'value': 2005},
+                    #         {'label': 2006, 'value': 2006},
+                    #         {'label': 2007, 'value': 2007},
+                    #         {'label': 2008, 'value': 2008},
+                    #         {'label': 2009, 'value': 2009}
+                    #     ],
+                    #     value=2000,
+                    #     style=dict(width='70%',
+                    #             verticalAlign="middle"
+                    #             )
+                    #     ), ),
+
+                    # html.H3('End Year'),
+                    # dbc.Col(
+                    #     dcc.Dropdown(
+                    #     id='dd-end_year',
+                    #     options=[
+                    #         {'label': 2001, 'value': 2001},
+                    #         {'label': 2002, 'value': 2002},
+                    #         {'label': 2003, 'value': 2003},
+                    #         {'label': 2004, 'value': 2004},
+                    #         {'label': 2005, 'value': 2005},
+                    #         {'label': 2006, 'value': 2006},
+                    #         {'label': 2007, 'value': 2007},
+                    #         {'label': 2008, 'value': 2008},
+                    #         {'label': 2009, 'value': 2009},
+                    #         {'label': 2010, 'value': 2010}
+                    #     ],
+                    #     value=2001,
+                    #     style=dict(width='70%',
+                    #         verticalAlign="middle"
+                    #         )
+                    #     ), ),
+
+                    # html.H3('Value'),
+                    # dbc.Col(
+                    #     dcc.Dropdown(
+                    #     id='dd-value',
+                    #     options=[
+                    #         {'label': 'Rate', 'value': 'rate'},
+                    #         {'label': 'Count', 'value': 'count'}
+                    #     ],
+                    #     value='rate',
+                    #     style=dict(width='70%',
+                    #         verticalAlign="middle")
+                    #     ),
+                    #     # Just to add some space
+                    #  html.Iframe(height='200', width='10',style={'border-width': '0'})
+                    # )
                 ]
-    )
-])   
+            )                   
+
 
 
 #LAYOUT
@@ -221,12 +262,15 @@ app.layout = html.Div([
         dcc.Tab(label='Unemployment Over years', value='tab-2'),
         dcc.Tab(label='Seasonal Unemployment', value='tab-3'), 
     ]),
-    html.Div([header]),
-    html.Div(id='tabs-content')
-            
-]
+     html.H1("Unemployment Rates in Industries", className="display-3"),
+                html.P(
+                    "These graphs display a framework for countries to examine their unemployment rates across industries",
+                    className="lead",
+                ),
+    html.Div(id='tabs-content')]
 )   
 
+#TABS FUNCTION
 @app.callback(Output('tabs-content', 'children'),
               [Input('tabs-example', 'value')])
               
@@ -251,16 +295,13 @@ def render_content(tab):
         pass
 
 
-    
+#PLOT 1 CALL BACK  
 @app.callback(
     dash.dependencies.Output('plot', 'srcDoc'),
-    [dash.dependencies.Input('dd-start_year', 'value'),
-     dash.dependencies.Input('dd-end_year', 'value'),
+    [dash.dependencies.Input('year_range', 'value'),
      dash.dependencies.Input('dd-value', 'value'),])
-def update_plot(start_year, end_year, value):
-
-    updated_plot = make_plot(start_year, end_year, value).to_html()
-
+def update_plot(year_range, value):
+    updated_plot = make_plot(year_range, value).to_html()
     return updated_plot
 
 if __name__ == '__main__':
