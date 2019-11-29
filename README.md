@@ -18,7 +18,7 @@ The following sketch shows the visual design of the app.
 <b> Tab 1: Job Growth Across Industries</b>
 
 * Visualize the statistic using rate for percent change or count for absolute change
-* Slider for the year range between 2000 and 2001.
+* Slider for the year range between 2000 and 2010.
 * User can see the difference between industries in how they are doing during the range of years in unemployment. 
 
 
