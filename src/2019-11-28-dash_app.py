@@ -381,13 +381,13 @@ def update_plot2(industries, value):
     return updated_plot2
 
 #PLOT 3 CALL BACK  
-# @app.callback(
-#     dash.dependencies.Output('plot', 'srcDoc'),
-#     [dash.dependencies.Input('year_range', 'value'),
-#      dash.dependencies.Input('dd-value', 'value'),])
-# def update_plot3(year_range, value):
-#     updated_plot3 = make_plot3(year_range, value).to_html()
-#     return updated_plot3
+@app.callback(
+    dash.dependencies.Output('plot', 'srcDoc'),
+    [dash.dependencies.Input('year_range', 'value'),
+     dash.dependencies.Input('dd-value', 'value'),])
+def update_plot3(industries, year, value):
+    updated_plot3 = make_plot3(industries, year, value).to_html()
+    return updated_plot3
 
 if __name__ == '__main__':
     app.run_server(debug=True)
