@@ -14,7 +14,7 @@ app.config['suppress_callback_exceptions'] = True
 server = app.server
 app.title = 'Group112 Dash app: Unemployment'
 
-def make_plot1(year_range=[2000,2001], stat = 'rate'): #Add in a default value to start with
+def make_plot1(year_range=[2003,2005], stat = 'rate'): #Add in a default value to start with
 
 
     #THEME
@@ -91,13 +91,13 @@ def make_plot1(year_range=[2000,2001], stat = 'rate'): #Add in a default value t
                           axis = alt.Axis(tickCount=10, format = '%')),
                     alt.Y("industry:O", title = ''),
                     color = alt.condition(alt.datum.rate > 0, alt.value("forestgreen"), alt.value("red")),
-                    tooltip = ["rate"])
+                    tooltip = ["rate"]).interactive()
         cp = alt.Chart(new_df).mark_point(size = 70, filled = True, opacity = 1).encode(
                     alt.X("rate:Q", title = "Percentage Change",
                           axis = alt.Axis(tickCount=10, format = '%')),
                     alt.Y("industry:O", title = ''),
                     color = alt.condition(alt.datum.rate > 0, alt.value("forestgreen"), alt.value("red")),
-                    tooltip = ["rate"])
+                    tooltip = ["rate"]).interactive()
         
     if stat == "count":
         new_df["count"] = round(df[year_range[1]] - df[year_range[0]])
@@ -105,12 +105,12 @@ def make_plot1(year_range=[2000,2001], stat = 'rate'): #Add in a default value t
                     alt.X("count:Q", title = "Absolute Change"),
                     alt.Y("industry:O", title = ''),
                     color = alt.condition(alt.datum.count > 0, alt.value("forestgreen"), alt.value("red")),
-                    tooltip = ["count"])
+                    tooltip = ["count"]).interactive()
         cp = alt.Chart(new_df).mark_point(size = 70, filled = True, opacity = 1).encode(
                     alt.X("count:Q", title = "Absolute Change"),
                     alt.Y("industry:O", title = ''),
                     color = alt.condition(alt.datum.count > 0, alt.value("forestgreen"), alt.value("red")),
-                    tooltip = ["count"])
+                    tooltip = ["count"]).interactive()
 
     return (cb + cp).properties(
         width = 575,
@@ -191,25 +191,25 @@ def make_plot2(industries = ["Agriculture", "Construction"], stat = "rate"): #Ad
                     alt.X("year:O", axis = alt.Axis(title = "Year", labelAngle = 0)),
                     alt.Y("rate:Q", axis = alt.Axis(title = "Rate", tickCount = 5, format = '%')),
                     alt.Color("industry", title = "Industry"),
-                    tooltip = ["industry", "year", "rate"])
+                    tooltip = ["industry", "year", "rate"]).interactive()
 
         cp = alt.Chart(new_df).mark_point(size = 10).encode(
                     alt.X("year:O", axis = alt.Axis(title = "Year", labelAngle = 0)),
                     alt.Y("rate:Q", axis = alt.Axis(title = "Rate", tickCount = 5, format = '%')),
                     alt.Color("industry", legend = None),
-                    tooltip = ["industry", "year", "rate"])
+                    tooltip = ["industry", "year", "rate"]).interactive()
         
     if stat == "count":
         cl = alt.Chart(new_df).mark_line(size = 2).encode(
                     alt.X("year:O", axis = alt.Axis(title = "Year", labelAngle = 0)),
                     alt.Y("count:Q", axis = alt.Axis(title = "Count")),
                     alt.Color("industry", title = "Industry"),
-                    tooltip = ["industry", "year", "count"])
+                    tooltip = ["industry", "year", "count"]).interactive()
         cp = alt.Chart(new_df).mark_point(size = 10).encode(
                     alt.X("year:O", axis = alt.Axis(title = "Year", labelAngle = 0)),
                     alt.Y("count:Q", axis = alt.Axis(title = "Count")),
                     alt.Color("industry", legend = None),
-                    tooltip = ["industry", "year", "count"])
+                    tooltip = ["industry", "year", "count"]).interactive()
 
     return (cl + cp).properties(
         width = 600,
@@ -288,23 +288,23 @@ def make_plot3(industries = ["Agriculture", "Construction"], year = 2000, stat =
                     alt.X("month:O", axis = alt.Axis(title = "Month", labelAngle = 0)),
                     alt.Y("rate:Q", axis = alt.Axis(title = "Rate", tickCount = 5, format = '%')),
                     alt.Color("industry", title='Industry'),
-                    tooltip = ["industry", "month", "rate"])
+                    tooltip = ["industry", "month", "rate"]).interactive()
         cp = alt.Chart(new_df).mark_point(size = 10).encode(
                     alt.X("month:O", axis = alt.Axis(title = "Month", labelAngle = 0)),
                     alt.Y("rate:Q", axis = alt.Axis(title = "Rate", tickCount = 5, format = '%')),
                     alt.Color("industry", legend = None),
-                    tooltip = ["industry", "month", "rate"])
+                    tooltip = ["industry", "month", "rate"]).interactive()
     if stat == "count":
         cl = alt.Chart(new_df).mark_line(size = 2).encode(
                     alt.X("month:O", axis = alt.Axis(title = "Month", labelAngle = 0)),
                     alt.Y("count:Q", axis = alt.Axis(title = "Count")),
                     alt.Color("industry", title='Industry'),
-                    tooltip = ["industry", "month", "count"])
+                    tooltip = ["industry", "month", "count"]).interactive()
         cp = alt.Chart(new_df).mark_point(size = 10).encode(
                     alt.X("month:O", axis = alt.Axis(title = "Month", labelAngle = 0)),
                     alt.Y("count:Q", axis = alt.Axis(title = "Count")),
                     alt.Color("industry", legend = None),
-                    tooltip = ["industry", "month", "count"])
+                    tooltip = ["industry", "month", "count"]).interactive()
     return (cl + cp).properties(
         width = 600,
         height = 450
@@ -356,7 +356,7 @@ content1 = html.Div([
                                     min=2000,
                                     max=2010,
                                     step=1,
-                                    value=[2000, 2001],
+                                    value=[2003, 2005],
                                     marks={
                                         2000: '2000',
                                         2001: '2001',
@@ -374,7 +374,9 @@ content1 = html.Div([
                             ], 
                             style={"display": "grid", "grid-template-columns": "90%",
                                    "text-align":"center"}
-                            )
+                            ),
+                            html.Br(),
+                            html.Div(id='year_range-output')
                         ])
                     ])
                 ])
@@ -530,8 +532,9 @@ content3 = html.Div([
                             ], 
                             style={"display": "grid", "grid-template-columns": "90%",
                                    "text-align":"center"}
-                            )
-
+                            ),
+                            html.Br(),
+                            html.Div(id='year3-output')
                         ])
                     ])
                 ])
@@ -574,6 +577,13 @@ def update_plot1(year_range, value):
     updated_plot1 = make_plot1(year_range, value).to_html()
     return updated_plot1
 
+# Tab 1 chosen year range call back
+@app.callback(
+    dash.dependencies.Output('year_range-output', 'children'),
+    [dash.dependencies.Input('year_range', 'value')])
+def update_output3(year_range):
+    return 'You have selected from {} to {}.'.format(year_range[0], year_range[1])
+
 #PLOT 2 CALL BACK  
 @app.callback(
     dash.dependencies.Output('plot2', 'srcDoc'),
@@ -592,6 +602,13 @@ def update_plot2(industries, value):
 def update_plot3(industries, year, value):
     updated_plot3 = make_plot3(industries, year, value).to_html()
     return updated_plot3
+
+# Tab 3 chosen year call back
+@app.callback(
+    dash.dependencies.Output('year3-output', 'children'),
+    [dash.dependencies.Input('year3', 'value')])
+def update_output3(year):
+    return 'You have selected Year: {}'.format(year)
 
 if __name__ == '__main__':
     app.run_server(debug=True)
