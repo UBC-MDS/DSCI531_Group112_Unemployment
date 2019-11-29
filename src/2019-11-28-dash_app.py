@@ -114,8 +114,8 @@ def make_plot1(year_range=[2000,2001], stat = 'rate'): #Add in a default value t
                     tooltip = ["count"])
 
     return (cb + cp).properties(
-        width = 650,
-        height = 500
+        width = 575,
+        height = 450
     )
 def make_plot2(industries = ["Agriculture", "Construction"], stat = "rate"): #Add in a default value to start with
 
@@ -213,8 +213,8 @@ def make_plot2(industries = ["Agriculture", "Construction"], stat = "rate"): #Ad
                     tooltip = ["industry", "year", "count"])
 
     return (cl + cp).properties(
-        width = 650,
-        height = 500
+        width = 600,
+        height = 450
     ).configure_legend(
         titleFontSize = 15,
         labelFontSize = 12
@@ -307,8 +307,8 @@ def make_plot3(industries = ["Agriculture", "Construction"], year = 2000, stat =
                     alt.Color("industry", legend = None),
                     tooltip = ["industry", "month", "count"])
     return (cl + cp).properties(
-        width = 650,
-        height = 500
+        width = 600,
+        height = 450
     ).configure_legend(
         titleFontSize = 15,
         labelFontSize = 12
@@ -336,7 +336,7 @@ content1 = html.Div([
                             html.Br(),
                             html.Br(),
                             html.Br(),
-                            html.H3('Choose Statistic:'),
+                            html.H4('Choose Statistic:'),
                             html.Div(
                                 dcc.RadioItems(
                                     id='dd-value',
@@ -345,11 +345,11 @@ content1 = html.Div([
                                         {'label': 'Count', 'value': 'count'}
                                     ],
                                     value='rate',
-                                    style=dict(width='40%',
+                                    style=dict(width='100%',
                                             verticalAlign="middle")
                                 ),
                             ),
-                            html.H3('Choose Year Range:'),
+                            html.H4('Choose Year Range:'),
                             html.Div([
                                 dcc.RangeSlider(
                                     id='year_range',
@@ -373,7 +373,7 @@ content1 = html.Div([
                                         }
                                 )
                             ], 
-                            style={"display": "grid", "grid-template-columns": "70%",
+                            style={"display": "grid", "grid-template-columns": "90%",
                                    "text-align":"center"}
                             )
                         ])
@@ -403,7 +403,7 @@ content2 = html.Div([
                             html.Br(),
                             html.Br(),
                             html.Br(),
-                            html.H3('Choose Statistic:'),
+                            html.H4('Choose Statistic:'),
                             html.Div(
                                 dcc.RadioItems(
                                     id='dd-value2',
@@ -416,7 +416,7 @@ content2 = html.Div([
                                             verticalAlign="middle")
                                 )
                             ),
-                            html.H3('Choose Industries:'),
+                            html.H4('Choose Industries:'),
                             html.Div(
                                 dcc.Dropdown(
                                     id='industries_list',
@@ -469,7 +469,7 @@ content3 = html.Div([
                             html.Br(),
                             html.Br(),
                             html.Br(),
-                            html.H3('Choose Statistic:'),
+                            html.H4('Choose Statistic:'),
                             html.Div(
                                 dcc.RadioItems(
                                     id='dd-value3',
@@ -482,7 +482,7 @@ content3 = html.Div([
                                             verticalAlign="middle")
                                 )
                             ),
-                            html.H3('Choose Industries:'),
+                            html.H4('Choose Industries:'),
                             html.Div(
                                 dcc.Dropdown(
                                     id='industries_list3',
@@ -507,7 +507,7 @@ content3 = html.Div([
                                     style=dict(width='85%')                                    
                                 ),
                             ),
-                            html.H3('Choose Year:'),
+                            html.H4('Choose Year:'),
                             html.Div([
                                 dcc.Slider(
                                     id='year3',
@@ -529,7 +529,7 @@ content3 = html.Div([
                                         }
                                 )
                             ], 
-                            style={"display": "grid", "grid-template-columns": "70%",
+                            style={"display": "grid", "grid-template-columns": "90%",
                                    "text-align":"center"}
                             )
 
