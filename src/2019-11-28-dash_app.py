@@ -507,7 +507,7 @@ content3 = html.Div([
                                     style=dict(width='85%')                                    
                                 ),
                             ),
-                            html.H3('Choose Year Range:'),
+                            html.H3('Choose Year:'),
                             html.Div([
                                 dcc.Slider(
                                     id='year3',
@@ -540,7 +540,7 @@ content3 = html.Div([
 #LAYOUT
 app.layout = html.Div([ 
     
-    html.H3("Unemployment Rates in Industries", className="display-4"),
+    html.H3("Unemployment Across Industries", className="display-4"),
                 html.P(
                     "These graphs display a framework for countries to examine their unemployment rates across industries",
                     className="lead",
