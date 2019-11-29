@@ -217,6 +217,97 @@ def make_plot2(industries = ["Agriculture", "Construction"], stat = "rate"): #Ad
         width = 600,
         height = 500
     )
+def make_plot3(industries = ["Agriculture", "Construction"], year = 2000, stat = "rate"): #Add in a default value to start with
+    #THEME
+    def mds_special():
+        font = "Arial"
+        axisColor = "#000000"
+        gridColor = "#DEDDDD"
+        return {
+            "config": {
+                "title": {
+                    "fontSize": 24,
+                    "font": font,
+                    "anchor": "start", # equivalent of left-aligned.
+                    "fontColor": "#000000"
+                },
+                'view': {
+                    "height": 300,
+                    "width": 400
+                },
+                "axisX": {
+                    "domain": True,
+                    #"domainColor": axisColor,
+                    "gridColor": gridColor,
+                    "domainWidth": 1,
+                    "grid": False,
+                    "labelFont": font,
+                    "labelFontSize": 12,
+                    "labelAngle": 0,
+                    "tickColor": axisColor,
+                    "tickSize": 5, # default, including it just to show you can change it
+                    "titleFont": font,
+                    "titleFontSize": 16,
+                    "titlePadding": 10, # guessing, not specified in styleguide
+                    "title": "X Axis Title (units)",
+                },
+                "axisY": {
+                    "domain": False,
+                    "grid": True,
+                    "gridColor": gridColor,
+                    "gridWidth": 1,
+                    "labelFont": font,
+                    "labelFontSize": 14,
+                    "labelAngle": 0,
+                    #"ticks": False, # even if you don't have a "domain" you need to turn these off.
+                    "titleFont": font,
+                    "titleFontSize": 16,
+                    "titlePadding": 10, # guessing, not specified in styleguide
+                    "title": "Y Axis Title (units)",
+                    # titles are by default vertical left of axis so we need to hack this
+                    #"titleAngle": 0, # horizontal
+                    #"titleY": -10, # move it up
+                    #"titleX": 18, # move it to the right so it aligns with the labels
+                },
+            }
+                }
+    # register the custom theme under a chosen name
+    alt.themes.register('mds_special', mds_special)
+    # enable the newly registered theme
+    alt.themes.enable('mds_special')
+    #alt.themes.enable('none') # to return to default
+    #READ IN DATA
+    df_raw = pd.read_csv('../data/unemply_df_month.csv', index_col=0)
+    new_df = df_raw
+    new_df = new_df.query('industry in @industries')
+    new_df = new_df.query('year == @year')
+    new_df = new_df.loc[:, ['month', 'industry', stat]]
+    if stat == "rate":
+        cl = alt.Chart(new_df).mark_line(size = 1).encode(
+                    alt.X("month:O", axis = alt.Axis(title = "Month", labelAngle = 0)),
+                    alt.Y("rate:Q", axis = alt.Axis(title = "Rate", tickCount = 5, format = '%')),
+                    alt.Color("industry", legend = None),
+                    tooltip = ["industry", "month", "rate"])
+        cp = alt.Chart(new_df).mark_point(size = 5).encode(
+                    alt.X("month:O", axis = alt.Axis(title = "Month", labelAngle = 0)),
+                    alt.Y("rate:Q", axis = alt.Axis(title = "Rate", tickCount = 5, format = '%')),
+                    alt.Color("industry", legend = None),
+                    tooltip = ["industry", "month", "rate"])
+    if stat == "count":
+        cl = alt.Chart(new_df).mark_line(size = 1).encode(
+                    alt.X("month:O", axis = alt.Axis(title = "Month", labelAngle = 0)),
+                    alt.Y("count:Q", axis = alt.Axis(title = "Count")),
+                    alt.Color("industry", legend = None),
+                    tooltip = ["industry", "month", "count"])
+        cp = alt.Chart(new_df).mark_point(size = 5).encode(
+                    alt.X("month:O", axis = alt.Axis(title = "Month", labelAngle = 0)),
+                    alt.Y("count:Q", axis = alt.Axis(title = "Count")),
+                    alt.Color("industry", legend = None),
+                    tooltip = ["industry", "month", "count"])
+    return (cl + cp).properties(
+        width = 600,
+        height = 500
+    )
 
 content1 = dbc.Container([
              dbc.Row(
