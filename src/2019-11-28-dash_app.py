@@ -115,7 +115,7 @@ def make_plot1(year_range=[2000,2001], stat = 'rate'): #Add in a default value t
 
     return (cb + cp).properties(
         width = 600,
-        height = 500
+        height = 400
     )
 
 def make_plot2(industries = ["Agriculture", "Construction"], stat = "rate"): #Add in a default value to start with
@@ -189,25 +189,25 @@ def make_plot2(industries = ["Agriculture", "Construction"], stat = "rate"): #Ad
     new_df = new_df.loc[:, ['year', 'industry', stat]]
     
     if stat == "rate":
-        cl = alt.Chart(new_df).mark_line(size = 1).encode(
+        cl = alt.Chart(new_df).mark_line(size = 2).encode(
                     alt.X("year:O", axis = alt.Axis(title = "Year", labelAngle = 0)),
                     alt.Y("rate:Q", axis = alt.Axis(title = "Rate", tickCount = 5, format = '%')),
                     alt.Color("industry", title = "Industry"),
                     tooltip = ["industry", "year", "rate"])
 
-        cp = alt.Chart(new_df).mark_point(size = 5).encode(
+        cp = alt.Chart(new_df).mark_point(size = 10).encode(
                     alt.X("year:O", axis = alt.Axis(title = "Year", labelAngle = 0)),
                     alt.Y("rate:Q", axis = alt.Axis(title = "Rate", tickCount = 5, format = '%')),
                     alt.Color("industry", legend = None),
                     tooltip = ["industry", "year", "rate"])
         
     if stat == "count":
-        cl = alt.Chart(new_df).mark_line(size = 1).encode(
+        cl = alt.Chart(new_df).mark_line(size = 2).encode(
                     alt.X("year:O", axis = alt.Axis(title = "Year", labelAngle = 0)),
                     alt.Y("count:Q", axis = alt.Axis(title = "Count")),
                     alt.Color("industry", title = "Industry"),
                     tooltip = ["industry", "year", "count"])
-        cp = alt.Chart(new_df).mark_point(size = 5).encode(
+        cp = alt.Chart(new_df).mark_point(size = 10).encode(
                     alt.X("year:O", axis = alt.Axis(title = "Year", labelAngle = 0)),
                     alt.Y("count:Q", axis = alt.Axis(title = "Count")),
                     alt.Color("industry", legend = None),
@@ -434,7 +434,7 @@ app.layout = html.Div([
                 ),
     dcc.Tabs(id='tabs-example', value='tab-1', children=[
         dcc.Tab(label='Job Growth Across Industries', value='tab-1'),
-        dcc.Tab(label='Unemployment Over years', value='tab-2'),
+        dcc.Tab(label='Unemployment Throughout The Years', value='tab-2'),
         dcc.Tab(label='Seasonal Unemployment', value='tab-3'), 
     ]),
     html.Div(id='tabs-content')]
@@ -472,13 +472,13 @@ def update_plot2(industries, value):
     return updated_plot2
 
 #PLOT 3 CALL BACK  
-@app.callback(
-    dash.dependencies.Output('plot', 'srcDoc'),
-    [dash.dependencies.Input('year_range', 'value'),
-     dash.dependencies.Input('dd-value', 'value'),])
-def update_plot3(industries, year, value):
-    updated_plot3 = make_plot3(industries, year, value).to_html()
-    return updated_plot3
+# @app.callback(
+#     dash.dependencies.Output('plot', 'srcDoc'),
+#     [dash.dependencies.Input('year_range', 'value'),
+#      dash.dependencies.Input('dd-value', 'value'),])
+# def update_plot3(industries, year, value):
+#     updated_plot3 = make_plot3(industries, year, value).to_html()
+#     return updated_plot3
 
 if __name__ == '__main__':
     app.run_server(debug=True)
