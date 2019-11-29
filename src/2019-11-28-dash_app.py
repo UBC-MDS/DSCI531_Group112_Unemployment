@@ -114,10 +114,13 @@ def make_plot1(year_range=[2000,2001], stat = 'rate'): #Add in a default value t
                     tooltip = ["count"])
 
     return (cb + cp).properties(
+<<<<<<< HEAD
         width = 600,
+=======
+        width = 500,
+>>>>>>> upstream/master
         height = 400
     )
-
 def make_plot2(industries = ["Agriculture", "Construction"], stat = "rate"): #Add in a default value to start with
 
 
@@ -214,8 +217,11 @@ def make_plot2(industries = ["Agriculture", "Construction"], stat = "rate"): #Ad
                     tooltip = ["industry", "year", "count"])
 
     return (cl + cp).properties(
-        width = 600,
-        height = 500
+        width = 500,
+        height = 400
+    ).configure_legend(
+        titleFontSize = 15,
+        labelFontSize = 12
     )
 def make_plot3(industries = ["Agriculture", "Construction"], year = 2000, stat = "rate"): #Add in a default value to start with
     #THEME
@@ -286,7 +292,7 @@ def make_plot3(industries = ["Agriculture", "Construction"], year = 2000, stat =
         cl = alt.Chart(new_df).mark_line(size = 1).encode(
                     alt.X("month:O", axis = alt.Axis(title = "Month", labelAngle = 0)),
                     alt.Y("rate:Q", axis = alt.Axis(title = "Rate", tickCount = 5, format = '%')),
-                    alt.Color("industry", legend = None),
+                    alt.Color("industry", title='Industry'),
                     tooltip = ["industry", "month", "rate"])
         cp = alt.Chart(new_df).mark_point(size = 5).encode(
                     alt.X("month:O", axis = alt.Axis(title = "Month", labelAngle = 0)),
@@ -297,7 +303,7 @@ def make_plot3(industries = ["Agriculture", "Construction"], year = 2000, stat =
         cl = alt.Chart(new_df).mark_line(size = 1).encode(
                     alt.X("month:O", axis = alt.Axis(title = "Month", labelAngle = 0)),
                     alt.Y("count:Q", axis = alt.Axis(title = "Count")),
-                    alt.Color("industry", legend = None),
+                    alt.Color("industry", title='Industry'),
                     tooltip = ["industry", "month", "count"])
         cp = alt.Chart(new_df).mark_point(size = 5).encode(
                     alt.X("month:O", axis = alt.Axis(title = "Month", labelAngle = 0)),
@@ -305,8 +311,11 @@ def make_plot3(industries = ["Agriculture", "Construction"], year = 2000, stat =
                     alt.Color("industry", legend = None),
                     tooltip = ["industry", "month", "count"])
     return (cl + cp).properties(
-        width = 600,
-        height = 500
+        width = 500,
+        height = 400
+    ).configure_legend(
+        titleFontSize = 15,
+        labelFontSize = 12
     )
 
 content1 = dbc.Container([
@@ -314,8 +323,8 @@ content1 = dbc.Container([
                 html.Iframe(
                     sandbox='allow-scripts',
                     id='plot',
-                    height='600',
-                    width='1000',
+                    height='500',
+                    width='800',
                     style={'border-width': '0'},
                     ################ The magic happens here
                     srcDoc=make_plot1().to_html()
@@ -365,14 +374,13 @@ content1 = dbc.Container([
                             "text-align":"center"}),
                 ]
             )                   
-
 content2 = dbc.Container([
              dbc.Row(
                 html.Iframe(
                     sandbox='allow-scripts',
                     id='plot2',
-                    height='600',
-                    width='1000',
+                    height='500',
+                    width='800',
                     style={'border-width': '0'},
                     ################ The magic happens here
                     srcDoc=make_plot2().to_html()
@@ -394,7 +402,7 @@ content2 = dbc.Container([
                             ),
                     ),),
 
-                    html.H3('Choose Industries'),
+                    html.H3('Choose Industries:'),
                     dbc.Col(
                     html.Div(
                         dcc.Dropdown(
@@ -419,15 +427,91 @@ content2 = dbc.Container([
                             multi=True
                         ),
                     ),),
-                    html.H3('  '),
                 ]
             ) 
+content3 = dbc.Container([
+             dbc.Row(
+                html.Iframe(
+                    sandbox='allow-scripts',
+                    id='plot3',
+                    height='500',
+                    width='800',
+                    style={'border-width': '0'},
+                    ################ The magic happens here
+                    srcDoc=make_plot3().to_html()
+                    ################ The magic happens here
+                    )),
 
+                    html.H3('Choose Statistic:'),
+                    dbc.Col(
+                    html.Div(
+                        dcc.RadioItems(
+                            id='dd-value3',
+                            options=[
+                                {'label': 'Rate', 'value': 'rate'},
+                                {'label': 'Count', 'value': 'count'}
+                            ],
+                            value='rate',
+                            style=dict(width='40%',
+                                    verticalAlign="middle")
+                            ),
+                    ),),
+
+                    html.H3('Choose Year:'),
+                    dbc.Col(
+                    html.Div(
+                        dcc.Slider(
+                            id='year3',
+                            min=2000,
+                            max=2010,
+                            value=2000,
+                            marks={
+                                2000: '2000',
+                                2001: '2001',
+                                2002: '2002',
+                                2003: '2003',
+                                2004: '2004',
+                                2005: '2005',
+                                2006: '2006',
+                                2007: '2007',
+                                2008: '2008',
+                                2009: '2009',
+                                2010: '2010'
+                                }
+                            ),
+                    ),),
+
+                    html.H3('Choose Industries:'),
+                    dbc.Col(
+                    html.Div(
+                        dcc.Dropdown(
+                            id='industries_list3',
+                            options=[
+                                {'label': 'Agriculture', 'value': 'Agriculture'},
+                                {'label': 'Business services', 'value': 'Business services'},
+                                {'label': 'Construction', 'value': 'Construction'},
+                                {'label': 'Education and Health', 'value': 'Education and Health'},
+                                {'label': 'Finance', 'value': 'Finance'},
+                                {'label': 'Government', 'value': 'Government'},
+                                {'label': 'Information', 'value': 'Information'},
+                                {'label': 'Leisure and hospitality', 'value': 'Leisure and hospitality'},
+                                {'label': 'Manufacturing', 'value': 'Manufacturing'},
+                                {'label': 'Mining and Extraction', 'value': 'Mining and Extraction'},
+                                {'label': 'Self-employed', 'value': 'Self-employed'},
+                                {'label': 'Transportation and Utilities', 'value': 'Transportation and Utilitie'},
+                                {'label': 'Wholesale and Retail Trade', 'value': 'Wholesale and Retail Trade'},
+                                {'label': 'Other', 'value': 'Other'},
+                            ],
+                            value=['Agriculture', 'Construction'],
+                            multi=True
+                        ),
+                    ),),
+                ]
+            )
 #LAYOUT
 app.layout = html.Div([ 
-    ### Add Tabs to the top of the page
     
-    html.H1("Unemployment Rates in Industries", className="display-3"),
+    html.H3("Unemployment Rates in Industries", className="display-6"),
                 html.P(
                     "These graphs display a framework for countries to examine their unemployment rates across industries",
                     className="lead",
@@ -450,7 +534,7 @@ def render_content(tab):
     elif tab == 'tab-2':
         return content2
     elif tab == 'tab-3':
-        pass
+        return content3
 
 
 #PLOT 1 CALL BACK  
@@ -472,6 +556,7 @@ def update_plot2(industries, value):
     return updated_plot2
 
 #PLOT 3 CALL BACK  
+<<<<<<< HEAD
 # @app.callback(
 #     dash.dependencies.Output('plot', 'srcDoc'),
 #     [dash.dependencies.Input('year_range', 'value'),
@@ -479,6 +564,16 @@ def update_plot2(industries, value):
 # def update_plot3(industries, year, value):
 #     updated_plot3 = make_plot3(industries, year, value).to_html()
 #     return updated_plot3
+=======
+@app.callback(
+    dash.dependencies.Output('plot3', 'srcDoc'),
+    [dash.dependencies.Input('industries_list3', 'value'),
+     dash.dependencies.Input('year3', 'value'),
+     dash.dependencies.Input('dd-value3', 'value'),])
+def update_plot3(industries, year, value):
+    updated_plot3 = make_plot3(industries, year, value).to_html()
+    return updated_plot3
+>>>>>>> upstream/master
 
 if __name__ == '__main__':
     app.run_server(debug=True)
