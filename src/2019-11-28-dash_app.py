@@ -114,11 +114,7 @@ def make_plot1(year_range=[2000,2001], stat = 'rate'): #Add in a default value t
                     tooltip = ["count"])
 
     return (cb + cp).properties(
-<<<<<<< HEAD
         width = 600,
-=======
-        width = 500,
->>>>>>> upstream/master
         height = 400
     )
 def make_plot2(industries = ["Agriculture", "Construction"], stat = "rate"): #Add in a default value to start with
@@ -556,15 +552,6 @@ def update_plot2(industries, value):
     return updated_plot2
 
 #PLOT 3 CALL BACK  
-<<<<<<< HEAD
-# @app.callback(
-#     dash.dependencies.Output('plot', 'srcDoc'),
-#     [dash.dependencies.Input('year_range', 'value'),
-#      dash.dependencies.Input('dd-value', 'value'),])
-# def update_plot3(industries, year, value):
-#     updated_plot3 = make_plot3(industries, year, value).to_html()
-#     return updated_plot3
-=======
 @app.callback(
     dash.dependencies.Output('plot3', 'srcDoc'),
     [dash.dependencies.Input('industries_list3', 'value'),
@@ -573,7 +560,6 @@ def update_plot2(industries, value):
 def update_plot3(industries, year, value):
     updated_plot3 = make_plot3(industries, year, value).to_html()
     return updated_plot3
->>>>>>> upstream/master
 
 if __name__ == '__main__':
     app.run_server(debug=True)
