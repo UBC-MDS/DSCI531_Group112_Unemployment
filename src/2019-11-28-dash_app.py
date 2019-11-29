@@ -114,8 +114,8 @@ def make_plot1(year_range=[2000,2001], stat = 'rate'): #Add in a default value t
                     tooltip = ["count"])
 
     return (cb + cp).properties(
-        width = 600,
-        height = 400
+        width = 650,
+        height = 500
     )
 def make_plot2(industries = ["Agriculture", "Construction"], stat = "rate"): #Add in a default value to start with
 
@@ -213,8 +213,8 @@ def make_plot2(industries = ["Agriculture", "Construction"], stat = "rate"): #Ad
                     tooltip = ["industry", "year", "count"])
 
     return (cl + cp).properties(
-        width = 500,
-        height = 400
+        width = 650,
+        height = 500
     ).configure_legend(
         titleFontSize = 15,
         labelFontSize = 12
@@ -285,229 +285,262 @@ def make_plot3(industries = ["Agriculture", "Construction"], year = 2000, stat =
     new_df = new_df.query('year == @year')
     new_df = new_df.loc[:, ['month', 'industry', stat]]
     if stat == "rate":
-        cl = alt.Chart(new_df).mark_line(size = 1).encode(
+        cl = alt.Chart(new_df).mark_line(size = 2).encode(
                     alt.X("month:O", axis = alt.Axis(title = "Month", labelAngle = 0)),
                     alt.Y("rate:Q", axis = alt.Axis(title = "Rate", tickCount = 5, format = '%')),
                     alt.Color("industry", title='Industry'),
                     tooltip = ["industry", "month", "rate"])
-        cp = alt.Chart(new_df).mark_point(size = 5).encode(
+        cp = alt.Chart(new_df).mark_point(size = 10).encode(
                     alt.X("month:O", axis = alt.Axis(title = "Month", labelAngle = 0)),
                     alt.Y("rate:Q", axis = alt.Axis(title = "Rate", tickCount = 5, format = '%')),
                     alt.Color("industry", legend = None),
                     tooltip = ["industry", "month", "rate"])
     if stat == "count":
-        cl = alt.Chart(new_df).mark_line(size = 1).encode(
+        cl = alt.Chart(new_df).mark_line(size = 2).encode(
                     alt.X("month:O", axis = alt.Axis(title = "Month", labelAngle = 0)),
                     alt.Y("count:Q", axis = alt.Axis(title = "Count")),
                     alt.Color("industry", title='Industry'),
                     tooltip = ["industry", "month", "count"])
-        cp = alt.Chart(new_df).mark_point(size = 5).encode(
+        cp = alt.Chart(new_df).mark_point(size = 10).encode(
                     alt.X("month:O", axis = alt.Axis(title = "Month", labelAngle = 0)),
                     alt.Y("count:Q", axis = alt.Axis(title = "Count")),
                     alt.Color("industry", legend = None),
                     tooltip = ["industry", "month", "count"])
     return (cl + cp).properties(
-        width = 500,
-        height = 400
+        width = 650,
+        height = 500
     ).configure_legend(
         titleFontSize = 15,
         labelFontSize = 12
     )
 
-content1 = dbc.Container([
-             dbc.Row(
-                html.Iframe(
-                    sandbox='allow-scripts',
-                    id='plot',
-                    height='500',
-                    width='800',
-                    style={'border-width': '0'},
-                    ################ The magic happens here
-                    srcDoc=make_plot1().to_html()
-                    ################ The magic happens here
-                    )),
-
-                    html.H3('Choose Statistic:'),
-                    dbc.Col(
-                    html.Div(
-                        dcc.RadioItems(
-                            id='dd-value',
-                            options=[
-                                {'label': 'Rate', 'value': 'rate'},
-                                {'label': 'Count', 'value': 'count'}
-                            ],
-                            value='rate',
-                            style=dict(width='40%',
-                                    verticalAlign="middle")
-                            ),
-                    ),),
-
-                    html.H3('Choose Year Range:'),
-                    html.Div([
-                        dcc.RangeSlider(
-                            id='year_range',
-                            count=1,
-                            min=2000,
-                            max=2010,
-                            step=1,
-                            value=[2000, 2001],
-                            marks={
-                                2000: '2000',
-                                2001: '2001',
-                                2002: '2002',
-                                2003: '2003',
-                                2004: '2004',
-                                2005: '2005',
-                                2006: '2006',
-                                2007: '2007',
-                                2008: '2008',
-                                2009: '2009',
-                                2010: '2010'
-                                }
+content1 = html.Div([
+                    dbc.Row([
+                        dbc.Col(width = 1),
+                        dbc.Col([
+                            html.Br(),
+                            html.Iframe(
+                                sandbox='allow-scripts',
+                                id='plot',
+                                height='600',
+                                width='900',
+                                style={'border-width': '0'},
+                                ################ The magic happens here
+                                srcDoc=make_plot1().to_html()
+                                ################ The magic happens here
                             )
-                    ],
-                    style={"display": "grid", "grid-template-columns": "80%",
-                            "text-align":"center"}),
-                ]
-            )                   
-content2 = dbc.Container([
-             dbc.Row(
-                html.Iframe(
-                    sandbox='allow-scripts',
-                    id='plot2',
-                    height='500',
-                    width='800',
-                    style={'border-width': '0'},
-                    ################ The magic happens here
-                    srcDoc=make_plot2().to_html()
-                    ################ The magic happens here
-                    )),
-
-                    html.H3('Choose Statistic:'),
-                    dbc.Col(
-                    html.Div(
-                        dcc.RadioItems(
-                            id='dd-value2',
-                            options=[
-                                {'label': 'Rate', 'value': 'rate'},
-                                {'label': 'Count', 'value': 'count'}
-                            ],
-                            value='rate',
-                            style=dict(width='40%',
-                                    verticalAlign="middle")
+                        ]),
+                        dbc.Col([
+                            html.Br(),
+                            html.Br(),
+                            html.Br(),
+                            html.Br(),
+                            html.Br(),
+                            html.H3('Choose Statistic:'),
+                            html.Div(
+                                dcc.RadioItems(
+                                    id='dd-value',
+                                    options=[
+                                        {'label': 'Rate', 'value': 'rate'},
+                                        {'label': 'Count', 'value': 'count'}
+                                    ],
+                                    value='rate',
+                                    style=dict(width='40%',
+                                            verticalAlign="middle")
+                                ),
                             ),
-                    ),),
+                            html.H3('Choose Year Range:'),
+                            html.Div([
+                                dcc.RangeSlider(
+                                    id='year_range',
+                                    count=1,
+                                    min=2000,
+                                    max=2010,
+                                    step=1,
+                                    value=[2000, 2001],
+                                    marks={
+                                        2000: '2000',
+                                        2001: '2001',
+                                        2002: '2002',
+                                        2003: '2003',
+                                        2004: '2004',
+                                        2005: '2005',
+                                        2006: '2006',
+                                        2007: '2007',
+                                        2008: '2008',
+                                        2009: '2009',
+                                        2010: '2010'
+                                        }
+                                )
+                            ], 
+                            style={"display": "grid", "grid-template-columns": "70%",
+                                   "text-align":"center"}
+                            )
+                        ])
+                    ])
+                ])
+                       
 
-                    html.H3('Choose Industries:'),
-                    dbc.Col(
-                    html.Div(
-                        dcc.Dropdown(
-                            id='industries_list',
-                            options=[
-                                {'label': 'Agriculture', 'value': 'Agriculture'},
-                                {'label': 'Business services', 'value': 'Business services'},
-                                {'label': 'Construction', 'value': 'Construction'},
-                                {'label': 'Education and Health', 'value': 'Education and Health'},
-                                {'label': 'Finance', 'value': 'Finance'},
-                                {'label': 'Government', 'value': 'Government'},
-                                {'label': 'Information', 'value': 'Information'},
-                                {'label': 'Leisure and hospitality', 'value': 'Leisure and hospitality'},
-                                {'label': 'Manufacturing', 'value': 'Manufacturing'},
-                                {'label': 'Mining and Extraction', 'value': 'Mining and Extraction'},
-                                {'label': 'Self-employed', 'value': 'Self-employed'},
-                                {'label': 'Transportation and Utilities', 'value': 'Transportation and Utilitie'},
-                                {'label': 'Wholesale and Retail Trade', 'value': 'Wholesale and Retail Trade'},
-                                {'label': 'Other', 'value': 'Other'},
-                            ],
-                            value=['Agriculture', 'Construction'],
-                            multi=True
-                        ),
-                    ),),
-                ]
-            ) 
-content3 = dbc.Container([
-             dbc.Row(
-                html.Iframe(
-                    sandbox='allow-scripts',
-                    id='plot3',
-                    height='500',
-                    width='800',
-                    style={'border-width': '0'},
-                    ################ The magic happens here
-                    srcDoc=make_plot3().to_html()
-                    ################ The magic happens here
-                    )),
-
-                    html.H3('Choose Statistic:'),
-                    dbc.Col(
-                    html.Div(
-                        dcc.RadioItems(
-                            id='dd-value3',
-                            options=[
-                                {'label': 'Rate', 'value': 'rate'},
-                                {'label': 'Count', 'value': 'count'}
-                            ],
-                            value='rate',
-                            style=dict(width='40%',
-                                    verticalAlign="middle")
+content2 = html.Div([
+                    dbc.Row([
+                        dbc.Col(width = 1),
+                        dbc.Col([
+                            html.Br(),
+                            html.Iframe(
+                            sandbox='allow-scripts',
+                            id='plot2',
+                            height='600',
+                            width='900',
+                            style={'border-width': '0'},
+                            ################ The magic happens here
+                            srcDoc=make_plot2().to_html()
+                            ################ The magic happens here
+                            )
+                        ]),
+                        dbc.Col([
+                            html.Br(),
+                            html.Br(),
+                            html.Br(),
+                            html.Br(),
+                            html.Br(),
+                            html.H3('Choose Statistic:'),
+                            html.Div(
+                                dcc.RadioItems(
+                                    id='dd-value2',
+                                    options=[
+                                        {'label': 'Rate', 'value': 'rate'},
+                                        {'label': 'Count', 'value': 'count'}
+                                    ],
+                                    value='rate',
+                                    style=dict(width='40%',
+                                            verticalAlign="middle")
+                                )
                             ),
-                    ),),
+                            html.H3('Choose Industries:'),
+                            html.Div(
+                                dcc.Dropdown(
+                                    id='industries_list',
+                                    options=[
+                                        {'label': 'Agriculture', 'value': 'Agriculture'},
+                                        {'label': 'Business services', 'value': 'Business services'},
+                                        {'label': 'Construction', 'value': 'Construction'},
+                                        {'label': 'Education and Health', 'value': 'Education and Health'},
+                                        {'label': 'Finance', 'value': 'Finance'},
+                                        {'label': 'Government', 'value': 'Government'},
+                                        {'label': 'Information', 'value': 'Information'},
+                                        {'label': 'Leisure and hospitality', 'value': 'Leisure and hospitality'},
+                                        {'label': 'Manufacturing', 'value': 'Manufacturing'},
+                                        {'label': 'Mining and Extraction', 'value': 'Mining and Extraction'},
+                                        {'label': 'Self-employed', 'value': 'Self-employed'},
+                                        {'label': 'Transportation and Utilities', 'value': 'Transportation and Utilitie'},
+                                        {'label': 'Wholesale and Retail Trade', 'value': 'Wholesale and Retail Trade'},
+                                        {'label': 'Other', 'value': 'Other'},
+                                    ],
+                                    value=['Agriculture', 'Construction'],
+                                    multi=True,
+                                    style=dict(width='85%')
+                                    
+                                ),
+                            )
+                        ])
+                    ])
+                ])
+             
 
-                    html.H3('Choose Year:'),
-                    dbc.Col(
-                    html.Div(
-                        dcc.Slider(
-                            id='year3',
-                            min=2000,
-                            max=2010,
-                            value=2000,
-                            marks={
-                                2000: '2000',
-                                2001: '2001',
-                                2002: '2002',
-                                2003: '2003',
-                                2004: '2004',
-                                2005: '2005',
-                                2006: '2006',
-                                2007: '2007',
-                                2008: '2008',
-                                2009: '2009',
-                                2010: '2010'
-                                }
+content3 = html.Div([
+                    dbc.Row([
+                        dbc.Col(width = 1),
+                        dbc.Col([
+                            html.Br(),
+                            html.Iframe(
+                            sandbox='allow-scripts',
+                            id='plot3',
+                            height='600',
+                            width='900',
+                            style={'border-width': '0'},
+                            ################ The magic happens here
+                            srcDoc=make_plot3().to_html()
+                            ################ The magic happens here
+                            )
+                        ]), 
+                        dbc.Col([
+                            html.Br(),
+                            html.Br(),
+                            html.Br(),
+                            html.Br(),
+                            html.Br(),
+                            html.H3('Choose Statistic:'),
+                            html.Div(
+                                dcc.RadioItems(
+                                    id='dd-value3',
+                                    options=[
+                                        {'label': 'Rate', 'value': 'rate'},
+                                        {'label': 'Count', 'value': 'count'}
+                                    ],
+                                    value='rate',
+                                    style=dict(width='40%',
+                                            verticalAlign="middle")
+                                )
                             ),
-                    ),),
+                            html.H3('Choose Industries:'),
+                            html.Div(
+                                dcc.Dropdown(
+                                    id='industries_list3',
+                                    options=[
+                                        {'label': 'Agriculture', 'value': 'Agriculture'},
+                                        {'label': 'Business services', 'value': 'Business services'},
+                                        {'label': 'Construction', 'value': 'Construction'},
+                                        {'label': 'Education and Health', 'value': 'Education and Health'},
+                                        {'label': 'Finance', 'value': 'Finance'},
+                                        {'label': 'Government', 'value': 'Government'},
+                                        {'label': 'Information', 'value': 'Information'},
+                                        {'label': 'Leisure and hospitality', 'value': 'Leisure and hospitality'},
+                                        {'label': 'Manufacturing', 'value': 'Manufacturing'},
+                                        {'label': 'Mining and Extraction', 'value': 'Mining and Extraction'},
+                                        {'label': 'Self-employed', 'value': 'Self-employed'},
+                                        {'label': 'Transportation and Utilities', 'value': 'Transportation and Utilitie'},
+                                        {'label': 'Wholesale and Retail Trade', 'value': 'Wholesale and Retail Trade'},
+                                        {'label': 'Other', 'value': 'Other'},
+                                    ],
+                                    value=['Agriculture', 'Construction'],
+                                    multi=True,
+                                    style=dict(width='85%')                                    
+                                ),
+                            ),
+                            html.H3('Choose Year Range:'),
+                            html.Div([
+                                dcc.Slider(
+                                    id='year3',
+                                    min=2000,
+                                    max=2010,
+                                    value=2000,
+                                    marks={
+                                        2000: '2000',
+                                        2001: '2001',
+                                        2002: '2002',
+                                        2003: '2003',
+                                        2004: '2004',
+                                        2005: '2005',
+                                        2006: '2006',
+                                        2007: '2007',
+                                        2008: '2008',
+                                        2009: '2009',
+                                        2010: '2010'
+                                        }
+                                )
+                            ], 
+                            style={"display": "grid", "grid-template-columns": "70%",
+                                   "text-align":"center"}
+                            )
 
-                    html.H3('Choose Industries:'),
-                    dbc.Col(
-                    html.Div(
-                        dcc.Dropdown(
-                            id='industries_list3',
-                            options=[
-                                {'label': 'Agriculture', 'value': 'Agriculture'},
-                                {'label': 'Business services', 'value': 'Business services'},
-                                {'label': 'Construction', 'value': 'Construction'},
-                                {'label': 'Education and Health', 'value': 'Education and Health'},
-                                {'label': 'Finance', 'value': 'Finance'},
-                                {'label': 'Government', 'value': 'Government'},
-                                {'label': 'Information', 'value': 'Information'},
-                                {'label': 'Leisure and hospitality', 'value': 'Leisure and hospitality'},
-                                {'label': 'Manufacturing', 'value': 'Manufacturing'},
-                                {'label': 'Mining and Extraction', 'value': 'Mining and Extraction'},
-                                {'label': 'Self-employed', 'value': 'Self-employed'},
-                                {'label': 'Transportation and Utilities', 'value': 'Transportation and Utilitie'},
-                                {'label': 'Wholesale and Retail Trade', 'value': 'Wholesale and Retail Trade'},
-                                {'label': 'Other', 'value': 'Other'},
-                            ],
-                            value=['Agriculture', 'Construction'],
-                            multi=True
-                        ),
-                    ),),
-                ]
-            )
+                        ])
+                    ])
+                ])
+
 #LAYOUT
 app.layout = html.Div([ 
     
-    html.H3("Unemployment Rates in Industries", className="display-6"),
+    html.H3("Unemployment Rates in Industries", className="display-4"),
                 html.P(
                     "These graphs display a framework for countries to examine their unemployment rates across industries",
                     className="lead",
