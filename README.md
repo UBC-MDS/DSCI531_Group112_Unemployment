@@ -35,7 +35,7 @@ The following sketch shows the visual design of the app.
 * We can see the trend of unemployment for a given year and see trends in seasons
 * This can help prepare governments and industries when to expect job losses, etc. 
 
-### Click [here](https://unemployment-trends-display.herokuapp.com/ ) for our app on Heroku 
+### Click [here](https://dsci532-group112-unemployment.herokuapp.com/) for our app on Heroku 
 
 ### Click [here](https://github.com/UBC-MDS/DSCI532_Group112_Unemployment) for our team's GitHub.com repo
 
