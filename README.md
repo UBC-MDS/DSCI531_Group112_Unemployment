@@ -18,7 +18,7 @@ The following sketch shows the visual design of the app.
 <b> Tab 1: Job Growth Across Industries</b>
 
 * Visualize the statistic using rate for percent change or count for absolute change
-* Slider for the year range between 2000 and 2001.
+* Slider for the year range between 2000 and 2010.
 * User can see the difference between industries in how they are doing during the range of years in unemployment. 
 
 
@@ -35,7 +35,7 @@ The following sketch shows the visual design of the app.
 * We can see the trend of unemployment for a given year and see trends in seasons
 * This can help prepare governments and industries when to expect job losses, etc. 
 
-### Heroku link:
+### Click [here](https://dsci532-group112-unemployment.herokuapp.com/) for our app on Heroku 
 
 ### Click [here](https://github.com/UBC-MDS/DSCI532_Group112_Unemployment) for our team's GitHub.com repo
 
