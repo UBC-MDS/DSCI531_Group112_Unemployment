@@ -8,10 +8,14 @@ Team Members: Braden Tam, Carlina Kim, Marvin Min
 
 The app contains three charts that explores 3 different research questions on jobs and unemployment across industries. We hope this can be incorporated as a framework for policymakers to understand their countries unemployment trends across industries. The three tabs display interactive charts that allow users to choose jobs, years of interest, or both that can increase their understanding of unemployment trends for the respective country. The first tab, "Job Growth Across Industries," shows a graph on industries unemployment changes for a range of years. In the second tab, "Unemployment Over Years", users can filter for a specific industry of their interest or multiple industries. In the third tab, "Seasonal Unemployment," both the slider and the dropdown checklist will allow users to filter the industries and specify the year at the same time. In all three tabs a radio button will allow users to choose how they would like to visualize the data (i.e. show the rates or counts). A tooltip will be available when hovering over specific data points to display the exact values (rate/count, year, industry) of points. 
 
-### App sketch
-The following sketch shows the visual design of the app.
+### App sketches
+The following sketches show the visual design of the app.
 
-![Image](https://github.com/UBC-MDS/DSCI532_Group112_Unemployment/blob/master/img/sketch.png)
+![Image](https://github.com/UBC-MDS/DSCI532_Group112_Unemployment/blob/master/img/tab1.png)
+
+![Image](https://github.com/UBC-MDS/DSCI532_Group112_Unemployment/blob/master/img/tab2.png)
+
+![Image](https://github.com/UBC-MDS/DSCI532_Group112_Unemployment/blob/master/img/tab3.png)
 
 ### Functionality of our app
 
