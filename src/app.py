@@ -79,7 +79,7 @@ def make_plot1(year_range=[2003,2005], stat = 'rate'): #Add in a default value t
     #alt.themes.enable('none') # to return to default
 
     #READ IN DATA
-    df_raw = pd.read_csv('data/unemply_df_year.csv', index_col=0)
+    df_raw = pd.read_csv('../data/unemply_df_year.csv', index_col=0)
     df = df_raw.drop(columns = ['count', 'rate'])
     df = df_raw.pivot(index = 'industry', columns = 'year', values = 'total').reset_index()
 
@@ -91,13 +91,13 @@ def make_plot1(year_range=[2003,2005], stat = 'rate'): #Add in a default value t
                           axis = alt.Axis(tickCount=10, format = '%')),
                     alt.Y("industry:O", title = ''),
                     color = alt.condition(alt.datum.rate > 0, alt.value("forestgreen"), alt.value("red")),
-                    tooltip = ["rate"]).interactive()
+                    tooltip = ["rate"])
         cp = alt.Chart(new_df).mark_point(size = 70, filled = True, opacity = 1).encode(
                     alt.X("rate:Q", title = "Percentage Change",
                           axis = alt.Axis(tickCount=10, format = '%')),
                     alt.Y("industry:O", title = ''),
                     color = alt.condition(alt.datum.rate > 0, alt.value("forestgreen"), alt.value("red")),
-                    tooltip = ["rate"]).interactive()
+                    tooltip = ["rate"])
         
     if stat == "count":
         new_df["count"] = round(df[year_range[1]] - df[year_range[0]])
@@ -105,12 +105,12 @@ def make_plot1(year_range=[2003,2005], stat = 'rate'): #Add in a default value t
                     alt.X("count:Q", title = "Absolute Change"),
                     alt.Y("industry:O", title = ''),
                     color = alt.condition(alt.datum.count > 0, alt.value("forestgreen"), alt.value("red")),
-                    tooltip = ["count"]).interactive()
+                    tooltip = ["count"])
         cp = alt.Chart(new_df).mark_point(size = 70, filled = True, opacity = 1).encode(
                     alt.X("count:Q", title = "Absolute Change"),
                     alt.Y("industry:O", title = ''),
                     color = alt.condition(alt.datum.count > 0, alt.value("forestgreen"), alt.value("red")),
-                    tooltip = ["count"]).interactive()
+                    tooltip = ["count"])
 
     return (cb + cp).properties(
         width = 575,
@@ -181,7 +181,7 @@ def make_plot2(industries = ["Agriculture", "Construction"], stat = "rate"): #Ad
     #alt.themes.enable('none') # to return to default
 
     #READ IN DATA
-    df_raw = pd.read_csv('data/unemply_df_year.csv', index_col=0)
+    df_raw = pd.read_csv('../data/unemply_df_year.csv', index_col=0)
     new_df = df_raw
     new_df = new_df.query('industry in @industries')
     new_df = new_df.loc[:, ['year', 'industry', stat]]
@@ -278,7 +278,7 @@ def make_plot3(industries = ["Agriculture", "Construction"], year = 2000, stat =
     alt.themes.enable('mds_special')
     #alt.themes.enable('none') # to return to default
     #READ IN DATA
-    df_raw = pd.read_csv('data/unemply_df_month.csv', index_col=0)
+    df_raw = pd.read_csv('../data/unemply_df_month.csv', index_col=0)
     new_df = df_raw
     new_df = new_df.query('industry in @industries')
     new_df = new_df.query('year == @year')
@@ -312,6 +312,11 @@ def make_plot3(industries = ["Agriculture", "Construction"], year = 2000, stat =
         titleFontSize = 15,
         labelFontSize = 12
     )
+
+df_raw = pd.read_csv('../data/unemply_df_year.csv', index_col=0)
+industry_options = [{'label': industry, 'value': industry} for industry in df_raw.industry.unique()]
+year_options_1 = {year:str(year) for year in range(2000, 2011)}
+year_options_2 = {year:str(year) for year in range(2000, 2010)}
 
 content1 = html.Div([
                     dbc.Row([
@@ -357,19 +362,7 @@ content1 = html.Div([
                                     max=2010,
                                     step=1,
                                     value=[2003, 2005],
-                                    marks={
-                                        2000: '2000',
-                                        2001: '2001',
-                                        2002: '2002',
-                                        2003: '2003',
-                                        2004: '2004',
-                                        2005: '2005',
-                                        2006: '2006',
-                                        2007: '2007',
-                                        2008: '2008',
-                                        2009: '2009',
-                                        2010: '2010'
-                                        }
+                                    marks=year_options_1
                                 )
                             ], 
                             style={"display": "grid", "grid-template-columns": "90%",
@@ -421,22 +414,7 @@ content2 = html.Div([
                             html.Div(
                                 dcc.Dropdown(
                                     id='industries_list',
-                                    options=[
-                                        {'label': 'Agriculture', 'value': 'Agriculture'},
-                                        {'label': 'Business services', 'value': 'Business services'},
-                                        {'label': 'Construction', 'value': 'Construction'},
-                                        {'label': 'Education and Health', 'value': 'Education and Health'},
-                                        {'label': 'Finance', 'value': 'Finance'},
-                                        {'label': 'Government', 'value': 'Government'},
-                                        {'label': 'Information', 'value': 'Information'},
-                                        {'label': 'Leisure and hospitality', 'value': 'Leisure and hospitality'},
-                                        {'label': 'Manufacturing', 'value': 'Manufacturing'},
-                                        {'label': 'Mining and Extraction', 'value': 'Mining and Extraction'},
-                                        {'label': 'Self-employed', 'value': 'Self-employed'},
-                                        {'label': 'Transportation and Utilities', 'value': 'Transportation and Utilitie'},
-                                        {'label': 'Wholesale and Retail Trade', 'value': 'Wholesale and Retail Trade'},
-                                        {'label': 'Other', 'value': 'Other'},
-                                    ],
+                                    options= industry_options,
                                     value=['Agriculture', 'Construction'],
                                     multi=True,
                                     style=dict(width='85%')
@@ -487,22 +465,7 @@ content3 = html.Div([
                             html.Div(
                                 dcc.Dropdown(
                                     id='industries_list3',
-                                    options=[
-                                        {'label': 'Agriculture', 'value': 'Agriculture'},
-                                        {'label': 'Business services', 'value': 'Business services'},
-                                        {'label': 'Construction', 'value': 'Construction'},
-                                        {'label': 'Education and Health', 'value': 'Education and Health'},
-                                        {'label': 'Finance', 'value': 'Finance'},
-                                        {'label': 'Government', 'value': 'Government'},
-                                        {'label': 'Information', 'value': 'Information'},
-                                        {'label': 'Leisure and hospitality', 'value': 'Leisure and hospitality'},
-                                        {'label': 'Manufacturing', 'value': 'Manufacturing'},
-                                        {'label': 'Mining and Extraction', 'value': 'Mining and Extraction'},
-                                        {'label': 'Self-employed', 'value': 'Self-employed'},
-                                        {'label': 'Transportation and Utilities', 'value': 'Transportation and Utilitie'},
-                                        {'label': 'Wholesale and Retail Trade', 'value': 'Wholesale and Retail Trade'},
-                                        {'label': 'Other', 'value': 'Other'},
-                                    ],
+                                    options= industry_options,
                                     value=['Agriculture', 'Construction'],
                                     multi=True,
                                     style=dict(width='85%')                                    
@@ -513,21 +476,9 @@ content3 = html.Div([
                                 dcc.Slider(
                                     id='year3',
                                     min=2000,
-                                    max=2010,
+                                    max=2009,
                                     value=2000,
-                                    marks={
-                                        2000: '2000',
-                                        2001: '2001',
-                                        2002: '2002',
-                                        2003: '2003',
-                                        2004: '2004',
-                                        2005: '2005',
-                                        2006: '2006',
-                                        2007: '2007',
-                                        2008: '2008',
-                                        2009: '2009',
-                                        2010: '2010'
-                                        }
+                                    marks=year_options_2
                                 )
                             ], 
                             style={"display": "grid", "grid-template-columns": "90%",
@@ -544,7 +495,7 @@ app.layout = html.Div([
     
     html.H3("Unemployment Across Industries", className="display-4"),
                 html.P(
-                    "These graphs display a framework for countries to examine their unemployment rates across industries",
+                    "These graphs display a framework for countries to examine their unemployment rates/counts across industries",
                     className="lead",
                 ),
     dcc.Tabs(id='tabs-example', value='tab-1', children=[
@@ -608,7 +559,7 @@ def update_plot3(industries, year, value):
     dash.dependencies.Output('year3-output', 'children'),
     [dash.dependencies.Input('year3', 'value')])
 def update_output3(year):
-    return 'You have selected Year: {}'.format(year)
+    return 'You have selected year: {}'.format(year)
 
 if __name__ == '__main__':
     app.run_server(debug=True)
