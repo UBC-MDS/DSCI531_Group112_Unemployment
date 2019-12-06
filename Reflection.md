@@ -22,7 +22,7 @@ Here are the main issues we will be working on and the bugs we have fixed from t
 * Zooming functionality in the plots is probably not necessary (we should remove this function)
       - Users may mess around with the zooming function too much and it doesn't provide any insight so we decided to remove it. 
       
-* Change the slider bar in the 3rd tab to something else (we'll do that if we have time)
+* Change the slider bar in the 3rd tab to something other than radio (we'll do that if we have time)
       - One of the users in the feedback session found the slider bar to be confusing as we are picking only one year but the slider bar has a shading that may lead users to believe they are choosing a range. 
 
 * Save filter criteria when switching between tabs (we'll try to do that if we have time and if it is possible)
