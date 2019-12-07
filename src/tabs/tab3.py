@@ -8,7 +8,7 @@ import dash_bootstrap_components as dbc
 from tabs.mds_special import mds_special
 
 # Read the data
-df_raw = pd.read_csv('../data/unemply_df_month.csv', index_col=0)
+df_raw = pd.read_csv('data/unemply_df_month.csv', index_col=0)
 
 # Define industry options for the dropdown list
 industry_options = [{'label': industry, 'value': industry}
