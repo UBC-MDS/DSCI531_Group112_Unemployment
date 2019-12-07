@@ -16,6 +16,15 @@ industry_options = [{'label': industry, 'value': industry}
 
 
 def make_plot(industries=["Agriculture", "Construction"], stat="rate"):
+    
+    """
+    Creates the plot for "Unemployment Throughout the Years". Returns a dotted line graph
+    from 2000-2010 for industries and statstic of choosing.
+    
+    Arguments:
+    industries -  user selects from list of industries
+    stat - user select either rate or count
+    """
 
     # register the mds_special theme
     alt.themes.register('mds_special', mds_special)
@@ -91,6 +100,7 @@ content = html.Div([
                             html.Br(),
                             html.Br(),
                             html.Br(),
+                            #Radio button to choose type of statistic
                             html.H4('Choose Statistic:'),
                             html.Div(
                                 dcc.RadioItems(
@@ -104,6 +114,7 @@ content = html.Div([
                                                verticalAlign="middle")
                                 )
                             ),
+                            #Multi dropdown option 
                             html.H4('Choose Industries:'),
                             html.Div(
                                 dcc.Dropdown(

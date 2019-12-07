@@ -16,6 +16,16 @@ year_options = {year: str(year) for year in range(2000, 2011)}
 
 def make_plot(year_range=[2003, 2005], stat='rate'):
 
+    """
+    Creates the plot to show "Job Growth Across Industries". Returns a lollopop chart
+     with statstic value (percent change, absolute change) on x axis and industry types 
+     on the y axis.
+    
+    Arguments:
+    year_range -  user selects year range from 2000 to 2010
+    stat - user select either rate or count
+    """
+
     # register the mds_special theme
     alt.themes.register('mds_special', mds_special)
 
@@ -103,6 +113,7 @@ content = html.Div([
                             html.Br(),
                             html.Br(),
                             html.Br(),
+                            #Radio button to choose type of statistic
                             html.H4('Choose Statistic:'),
                             html.Div(
                                 dcc.RadioItems(
@@ -116,6 +127,7 @@ content = html.Div([
                                                verticalAlign="middle")
                                 ),
                             ),
+                            #Year range slider 
                             html.H4('Choose Year Range:'),
                             html.Div([
                                 dcc.RangeSlider(
