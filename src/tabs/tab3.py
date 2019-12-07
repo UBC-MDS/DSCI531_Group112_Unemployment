@@ -18,8 +18,17 @@ industry_options = [{'label': industry, 'value': industry}
 year_options_2 = {year: str(year) for year in range(2000, 2010)}
 
 
-def make_plot(industries=["Agriculture", "Construction"],
-              year=2000, stat="rate"):
+def make_plot(industries=["Agriculture", "Construction"], year=2000, stat="rate"):
+ 
+    """
+    Creates the plot for "Seasonal Unemployment". Returns a dotted line graph
+    for a given year for industries and statstic of choosing.
+    
+    Arguments:
+    year - user selects year from 2000 to 2010
+    industries -  user selects from list of industries
+    stat - user select either rate or count
+    """
 
     # register the mds_special theme
     alt.themes.register('mds_special', mds_special)
